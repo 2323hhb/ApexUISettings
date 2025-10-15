@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- NFC Alpha透明度选项 -->
+    <string-array name="nfc_alpha_entries">
+        <item>Close</item>
+        <item>30%</item>
+        <item>70%</item>
+    </string-array>
+
+    <string-array name="nfc_alpha_values">
+        <item>close</item>
+        <item>30</item>
+        <item>70</item>
+    </string-array>
+
+    <!-- NFC Position位置选项 -->
+    <string-array name="nfc_position_entries">
+        <item>PositionA</item>
+        <item>PositionB</item>
+        <item>Show Both</item>
+    </string-array>
+
+    <string-array name="nfc_position_values">
+        <item>position_a</item>
+        <item>position_b</item>
+        <item>show_both</item>
+    </string-array>
+</resources>

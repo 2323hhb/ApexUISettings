@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url = uri("http://10.10.122.102:8081/repository/maven-releases/")
+            // 认证信息（建议通过环境变量增强安全性）
+            credentials {
+                username="admin"
+                password="Landi123"
+            }
+            allowInsecureProtocol = true // 显式允许HTTP
+        }
+    }
+
+}
+
+rootProject.name = "Settings"
+include ':app'

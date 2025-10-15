@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 自定义Switch样式 -->
+    <style name="CustomSwitchStyle" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="thumbTint">@null</item>
+        <item name="trackTint">@null</item>
+        <item name="android:thumb">@drawable/switch_custom_thumb_selector</item>
+        <item name="track">@drawable/switch_custom_track_selector</item>
+        <item name="android:minWidth">56dp</item>
+        <item name="android:minHeight">28dp</item>
+    </style>
+    <style name="AppTheme" parent="android:Theme.Material.Light">
+        <item name="android:background">@android:color/background_light</item>
+    </style>
+
+</resources>

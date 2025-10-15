@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">设置</string>
+    <string name="apex_settings">APEX 设置</string>
+    <string name="cfd_settings">副屏设置</string>
+    <string name="cfd_touch">客显屏是否允许触摸</string>
+    <string name="cfd_display">客显屏显示</string>
+    <string name="allows_touch_input_on_the_cfd">允许在副屏上进行触控输入。</string>
+    <string name="nfc_settings">NFC 设置</string>
+    <string name="positiona">位置A</string>
+    <string name="positionb">位置B</string>
+    <string name="position">显示位置</string>
+    <string name="show_both">全部显示</string>
+    <string name="close">0%</string>
+    <string name="_30">30%</string>
+    <string name="_70">70%</string>
+    <string name="alpha">透明度</string>
+    <string name="battery_warnings">电池警告</string>
+    <string name="illegal_battery_warnings">系统检测到未经认证的电池</string>
+    <string name="low_battery">电池电量低，请及时充电</string>
+    <string name="low_battery_to_shutdown">电量即将耗尽，系统将在60秒后关机</string>
+    <string name="battery_low_temperature">电池温度过低，请检查</string>
+    <string name="battery_high_temperature">电池温度过高，请检查</string>
+    <string name="illegal_battery">警告：检测到非认证电池。(故障代码：11000)
+使用非原装电池可能导致过热、起火或触电。请立即更换为厂家认证电池。
+若继续使用非认证电池，所有风险由用户自行承担。</string>
+    <string name="ok">确定</string>
+    <string name="cfd_backlight">客显屏亮度</string>
+    <string name="enable_visual_cue">是否显示</string>
+    <string name="reset_nfc_settings">重置NFC设置</string>
+    <string name="nfc_alpha_close">关闭</string>
+    <string name="nfc_alpha_30">30%</string>
+    <string name="nfc_alpha_70">70%</string>
+    <string name="nfc">NFC</string>
+    <string name="independent_cfd_display">双屏异显</string>
+
+</resources>

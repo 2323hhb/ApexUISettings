@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".activity.NFCSetActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="24dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_arrow"
+                android:background="?android:attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/nfc"
+                android:textSize="32sp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/nfc_submenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+         >
+
+            <!-- Display on Customer Display -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="24dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/nfc_display_switch_set"
+                android:background="?android:attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/enable_visual_cue"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/nfc_display_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:track="@drawable/switch_custom_track_selector"
+                    android:thumb="@drawable/switch_custom_thumb_selector"
+                    tools:ignore="UseSwitchCompatOrMaterialXml"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <!-- Alpha设置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:paddingStart="24dp"
+                android:id="@+id/nfc_alpha_setting_row">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/alpha"
+                    android:textSize="20sp" />
+
+                <RadioGroup
+                    android:id="@+id/nfc_alpha_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/nfc_alpha_close"
+                        android:tag="close"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/close"
+                        android:buttonTint="@color/radio_button_tint"/>
+
+                    <RadioButton
+                        android:id="@+id/nfc_alpha_30"
+                        android:tag="30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_30"
+                        android:buttonTint="@color/radio_button_tint"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/nfc_alpha_70"
+                        android:tag="70"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/_70"
+                        android:buttonTint="@color/radio_button_tint"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <!-- Position设置 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:paddingStart="24dp"
+                android:id="@+id/nfc_position_setting_row">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/position"
+                    android:textSize="20sp" />
+
+                <RadioGroup
+                    android:id="@+id/nfc_position_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/nfc_position_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="PositionA"
+                        android:text="@string/positiona" />
+
+                    <RadioButton
+                        android:id="@+id/nfc_position_b"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="PositionB"
+                        android:text="@string/positionb" />
+
+                    <RadioButton
+                        android:id="@+id/nfc_position_both"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="Show Both"
+                        android:text="@string/show_both" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <!-- 重置按钮 -->
+            <LinearLayout
+                android:id="@+id/reset_nfc_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:paddingStart="24dp"
+                android:background="?android:attr/selectableItemBackground"
+                tools:ignore="RtlSymmetry">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/reset_nfc_settings"
+                    android:padding="8dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
