@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="240dp"
-    android:layout_height="240dp"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:layout_gravity="center_horizontal">
-
-    <ImageView
-        android:id="@+id/dialog_icon"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center"
-        android:src="@drawable/low_battery" />
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bg_dialog_transfer">
 
     <TextView
         android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/dialog_icon"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:src="@drawable/low_battery" />
 
     <TextView
         android:id="@+id/dialog_message"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="@color/black"/>
     <!-- 分界线 -->
     <View
         android:id="@+id/dialog_divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:background="@android:color/darker_gray"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="1dp"
+        android:background="@color/dialog_divider_color"
         android:visibility="gone"/>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/dialog_button"
+        android:text="@string/ok"
+        android:background="@android:color/transparent"
+        android:textColor="@color/dialog_button_color"/>
 
 </LinearLayout>
