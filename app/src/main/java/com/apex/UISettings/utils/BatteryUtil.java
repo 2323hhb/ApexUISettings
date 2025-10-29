@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.BatteryManager;
 import android.os.PowerManager;
 import android.util.Log;
-
 import com.apex.UISettings.contants.BatteryConstants;
 import com.apex.UISettings.vsr.VSRManager;
 import com.apex.UISettings.R;
@@ -13,10 +12,10 @@ import com.apex.UISettings.R;
 public class BatteryUtil {
 
     private static final Logger logger = Logger.getLogger("ApexBatteryUtil");
-    private static final int LOW_BATTERY_THRESHOLD = 15; // 低电量阈值(%)
-    private static final float LOW_TEMP_THRESHOLD = 0.0f; // 低温阈值(℃)
+    private static final int LOW_BATTERY_THRESHOLD = 50; // 低电量阈值(%)
+    private static final float LOW_TEMP_THRESHOLD = -20.0f; // 低温阈值(℃)
     private static final float HIGH_TEMP_THRESHOLD = 45.0f; // 高温阈值(℃)
-    private static boolean isLowBatteryDialogShown = false;
+    public static boolean isLowBatteryDialogShown = false;
     private static boolean isLowTempDialogShown = false;
     private static boolean isHighTempDialogShown = false;
     private static boolean isInvalidBatteryDialogShown = false;
@@ -29,7 +28,7 @@ public class BatteryUtil {
         public boolean isLowBattery = false;
         public int invalidBatteryState;
         public String batteryCode;
-
+        public boolean isCharging;
     }
     /**
      * 检查电池状态并返回对应的提示信息（若状态正常则返回 null）
@@ -44,26 +43,28 @@ public class BatteryUtil {
         int health = batteryIntent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
         boolean isPresent = isPresent(batteryIntent);
         boolean isCharging = isCharging(batteryIntent);
+        logger.i("isCharging: " + isCharging);
         String batteryCode = VSRManager.getInstance().getBatteryStateCode();
-
-        Log.d("ApexBatteryUtil",batteryCode);
+        Log.d("ApexBatteryUtil","batteryCode: "+ batteryCode);
         float batteryPct = (level * 100f) / scale;
         float tempCelsius = temperature / 10.0f;
         BatteryStatusInfo statusInfo = new BatteryStatusInfo();
         statusInfo.batteryCode = batteryCode;
 
+
         // 低电量检测
         if (batteryPct <= LOW_BATTERY_THRESHOLD && !isCharging && !isLowBatteryDialogShown) {
-                logger.d("batteryPct: "+ batteryPct);
+                logger.d("hhb batteryPct: "+ batteryPct);
                 statusInfo.title = context.getString(R.string.low_battery);
                 statusInfo.message = context.getString(R.string.low_battery_to_shutdown);
                 statusInfo.iconId = R.drawable.low_battery;
                 statusInfo.isLowBattery = true;
                 statusInfo.batteryCode = batteryCode;
                 isLowBatteryDialogShown = true;
-            } else if ((batteryPct > LOW_BATTERY_THRESHOLD || isCharging) && isLowBatteryDialogShown) {
-                isLowBatteryDialogShown = false;
             }
+//        else if ((batteryPct > LOW_BATTERY_THRESHOLD || isCharging) && isLowBatteryDialogShown) {
+//                isLowBatteryDialogShown = false;
+//            }
 
         // 低温检测
         if (tempCelsius <= LOW_TEMP_THRESHOLD && !isLowTempDialogShown) {
@@ -81,7 +82,7 @@ public class BatteryUtil {
 
         // 高温检测
         if (tempCelsius >= HIGH_TEMP_THRESHOLD && !isHighTempDialogShown) {
-            Log.d("ApexBatteryUtil","Low temperature: " + temperature);
+            Log.d("ApexBatteryUtil","High temperature: " + temperature);
                 statusInfo.title = context.getString(R.string.battery_high_temperature_title);
             statusInfo.message = context.getString(R.string.battery_high_temperature);
                 statusInfo.iconId = R.drawable.high_temp_battery;
@@ -105,11 +106,13 @@ public class BatteryUtil {
                     }else {
                         statusInfo.title = context.getString(R.string.battery_warnings);
                         statusInfo.message = context.getString(R.string.battery_not_present);
-                        statusInfo.iconId = R.drawable.battery_abnormality_warning;
+                        statusInfo.iconId = R.drawable.battery_not_detected;
                     }
                 }else {
                     switch (invalidMsg){
+
                         case BatteryConstants.InvalidBatteryState.DEAD:
+                            statusInfo.title = context.getString(R.string.battery_warnings);
                             statusInfo.message = context.getString(R.string.battery_dead);
                             statusInfo.iconId = R.drawable.battery_abnormality_warning;
                             break;
@@ -119,6 +122,7 @@ public class BatteryUtil {
                             statusInfo.iconId = R.drawable.high_temp_battery;
                             break;
                         case BatteryConstants.InvalidBatteryState.COLD:
+                            statusInfo.title = context.getString(R.string.battery_low_temperature_to_shutdown_title);
                             statusInfo.message = context.getString(R.string.battery_low_temperature_to_shutdown);
                             statusInfo.iconId = R.drawable.low_temp_battery;
                             break;
@@ -128,7 +132,7 @@ public class BatteryUtil {
         } else if (invalidMsg ==0 && isInvalidBatteryDialogShown) {
                 isInvalidBatteryDialogShown = false;
         }
-        if (statusInfo.title != null){
+        if (statusInfo.title != null || statusInfo.isCharging){
             return statusInfo;
         }else {
             return null;
@@ -141,7 +145,7 @@ public class BatteryUtil {
     /**
      * 判断是否正在充电
      */
-    private static boolean isCharging(Intent intent) {
+    public static boolean isCharging(Intent intent) {
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         return status == BatteryManager.BATTERY_STATUS_CHARGING
                 || status == BatteryManager.BATTERY_STATUS_FULL;
