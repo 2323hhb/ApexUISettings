@@ -24,6 +24,19 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_arrow"
                 android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/btn_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/abc_ic_menu_overflow_material"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                tools:ignore="PrivateResource" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,7 +125,7 @@
                         android:tag="close"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/close"
+                        android:text="@string/nfc_alpha_close"
                         android:buttonTint="@color/radio_button_tint"/>
 
                     <RadioButton
@@ -120,7 +133,7 @@
                         android:tag="30"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/_30"
+                        android:text="@string/nfc_alpha_30"
                         android:buttonTint="@color/radio_button_tint"
                         />
 
@@ -129,7 +142,7 @@
                         android:tag="70"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/_70"
+                        android:text="@string/nfc_alpha_70"
                         android:buttonTint="@color/radio_button_tint"/>
 
                 </RadioGroup>
@@ -182,24 +195,23 @@
 
             </LinearLayout>
 
-            <!-- 重置按钮 -->
-            <LinearLayout
-                android:id="@+id/reset_nfc_row"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:paddingStart="24dp"
-                android:background="?android:attr/selectableItemBackground"
-                tools:ignore="RtlSymmetry">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="@string/reset_nfc_settings"
-                    android:padding="8dp"/>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/reset_nfc_row"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="8dp"-->
+<!--                android:paddingStart="24dp"-->
+<!--                android:background="?android:attr/selectableItemBackground"-->
+<!--                tools:ignore="RtlSymmetry">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@string/reset_nfc_settings"-->
+<!--                    android:padding="8dp"/>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
         </LinearLayout>

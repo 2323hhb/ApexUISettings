@@ -3,10 +3,13 @@ package com.apex.UISettings.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -25,7 +28,13 @@ public class NFCSetActivity extends AppCompatActivity {
     private int alpha;
     private int gravity;
     private Boolean display;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch NFCDisplay;
+    private LinearLayout displaySettingRow;
+    private RadioGroup nfcAlphaRadioGroup;
+    private RadioGroup nfcPositionRadioGroup;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private Switch displaySwitch;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -44,28 +53,47 @@ public class NFCSetActivity extends AppCompatActivity {
             backButton.setOnClickListener(v -> onBackPressed());
         }
         NFCDisplay = findViewById(R.id.nfc_display_switch);
+        nfcAlphaRadioGroup = findViewById(R.id.nfc_alpha_radio_group);
+        nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
+        displaySwitch = findViewById(R.id.nfc_display_switch);
+        ImageButton btn_menu = findViewById(R.id.btn_menu);
+        btn_menu.setOnClickListener(v -> showPopupMenu(v));
         Bundle NFCSetBundle = new Bundle();
         int QueryNFCSettingsRes = extUIManager.getNfcWindowConfiguration(NFCSetBundle);
+        Log.d(TAG,"extUIManager.getNfcWindowConfiguration" + NFCSetBundle);
         if (QueryNFCSettingsRes == 0){
             alpha = NFCSetBundle.getInt(NFCSet.Type.ALPHA);
-//            Log.d(TAG,"alpha is "+alpha);
+            Log.d(TAG,"alpha is "+alpha);
             gravity = NFCSetBundle.getInt(NFCSet.Type.GRAVITY);
-//            Log.d(TAG,"gravity is "+gravity);
+            Log.d(TAG,"gravity is "+gravity);
             display = NFCSetBundle.getBoolean(NFCSet.Type.DISPLAY);
-//            Log.d(TAG,"display is "+display);
+            Log.d(TAG,"display is "+display);
             NFCDisplay.setChecked(display);
         }else {
             Log.d(TAG,"get NFCSettings failed");
         }
         setupNfcDisplay();
         restoreSettings();
-        setupReset();
     }
+    private void showPopupMenu(View anchor) {
+        PopupMenu popup = new PopupMenu(this, anchor);
+        Menu menu = popup.getMenu();
+        //重置NFC设置菜单项
+        MenuItem resetItem = menu.add(0, 1, 0, R.string.reset_nfc_settings);
+        popup.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == 1) {
+                resetNfcSettings();
+                return true;
+            }
+            return false;
+        });
 
+        popup.show();
+    }
     private void setupNfcDisplay() {
         // NFC Display开关
-        LinearLayout displaySettingRow = findViewById(R.id.nfc_display_switch_set);
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch displaySwitch = findViewById(R.id.nfc_display_switch);
+        displaySettingRow = findViewById(R.id.nfc_display_switch_set);
+//        @SuppressLint("UseSwitchCompatOrMaterialCode")displaySwitch = findViewById(R.id.nfc_display_switch);
         if (displaySettingRow != null && displaySwitch != null) {
             displaySettingRow.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -82,6 +110,36 @@ public class NFCSetActivity extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     updateNfcSettingsVisibility(isChecked);
                     if (isChecked){
+                        nfcAlphaRadioGroup = findViewById(R.id.nfc_alpha_radio_group);
+                        if (nfcAlphaRadioGroup != null) {
+                            int selectedAlpha = alpha;
+                            switch (selectedAlpha) {
+                                case 0:
+                                    nfcAlphaRadioGroup.check(R.id.nfc_alpha_close);
+                                    break;
+                                case 1:
+                                    nfcAlphaRadioGroup.check(R.id.nfc_alpha_30);
+                                    break;
+                                case 2:
+                                    nfcAlphaRadioGroup.check(R.id.nfc_alpha_70);
+                                    break;
+                            }
+                        }
+                        nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
+                        if (nfcPositionRadioGroup != null) {
+                            int selectedPosition = gravity;
+                            switch (selectedPosition) {
+                                case 0:
+                                    nfcPositionRadioGroup.check(R.id.nfc_position_a);
+                                    break;
+                                case 1:
+                                    nfcPositionRadioGroup.check(R.id.nfc_position_b);
+                                    break;
+                                case 2:
+                                    nfcPositionRadioGroup.check(R.id.nfc_position_both);
+                                    break;
+                            }
+                        }
                         Bundle NFCSettingsBundle = new Bundle();
                         NFCSettingsBundle.putInt(NFCSet.Type.ALPHA,alpha);
                         NFCSettingsBundle.putInt(NFCSet.Type.GRAVITY,gravity);
@@ -90,26 +148,23 @@ public class NFCSetActivity extends AppCompatActivity {
                 }
             });
         }
-
-        RadioGroup nfcAlphaRadioGroup = findViewById(R.id.nfc_alpha_radio_group);
+        Bundle bundle = new Bundle();
         if (nfcAlphaRadioGroup != null) {
-            setupAlphaListener(nfcAlphaRadioGroup);
+            setupAlphaListener(nfcAlphaRadioGroup,bundle);
         }
-
-        RadioGroup nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
         if (nfcPositionRadioGroup != null) {
-            setupPositionListener(nfcPositionRadioGroup);
+            setupPositionListener(nfcPositionRadioGroup,bundle);
         }
     }
 
-    private void setupAlphaListener(RadioGroup nfcAlphaRadioGroup) {
+    private void setupAlphaListener(RadioGroup nfcAlphaRadioGroup, Bundle bundle) {
         nfcAlphaRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == -1) return; // 避免clearCheck()时的处理
-            Bundle bundle = new Bundle();
+
             RadioButton selectedRadioButton = findViewById(checkedId);
             if (selectedRadioButton != null) {
                 String tag = (String) selectedRadioButton.getTag();
-//                Log.d(TAG,"selectedAlphaTag= "+ tag);
+                Log.d(TAG,"selectedAlphaTag= "+ tag);
                 switch (tag) {
                     case NFCSet.AlphaType.Close:
                         bundle.putInt(NFCSet.Type.ALPHA, 0);
@@ -121,20 +176,19 @@ public class NFCSetActivity extends AppCompatActivity {
                         bundle.putInt(NFCSet.Type.ALPHA, 2);
                         break;
                 }
-//                Log.d(TAG, String.valueOf(bundle));
+                Log.d(TAG, String.valueOf(bundle));
                 extUIManager.showNfcWindow(bundle);
             }
         });
     }
 
-    private void setupPositionListener(RadioGroup nfcPositionRadioGroup) {
+    private void setupPositionListener(RadioGroup nfcPositionRadioGroup, Bundle bundle) {
         nfcPositionRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == -1) return;
-            Bundle bundle = new Bundle();
             RadioButton selectedRadioButton = findViewById(checkedId);
             if (selectedRadioButton != null) {
                 String tag = (String) selectedRadioButton.getTag();
-//                Log.d(TAG,"selectedPositionTag = "+ tag);
+                Log.d(TAG,"selectedPositionTag = "+ tag);
                 switch (tag) {
                     case NFCSet.PositionType.PositionA:
                         bundle.putInt(NFCSet.Type.GRAVITY, 0);
@@ -146,20 +200,20 @@ public class NFCSetActivity extends AppCompatActivity {
                         bundle.putInt(NFCSet.Type.GRAVITY, 2);
                         break;
                 }
-//                Log.d(TAG, String.valueOf(bundle));
+                Log.d(TAG, String.valueOf(bundle));
                 extUIManager.showNfcWindow(bundle);
             }
         });
     }
 
-    private void setupReset() {
-        LinearLayout nfcSettingRow = findViewById(R.id.reset_nfc_row);
-        if (nfcSettingRow != null) {
-            nfcSettingRow.setOnClickListener(v -> {
-                resetNfcSettings();
-            });
-        }
-    }
+//    private void setupReset() {
+//        LinearLayout nfcSettingRow = findViewById(R.id.reset_nfc_row);
+//        if (nfcSettingRow != null) {
+//            nfcSettingRow.setOnClickListener(v -> {
+//                resetNfcSettings();
+//            });
+//        }
+//    }
 
     private void resetNfcSettings() {
 
@@ -173,17 +227,15 @@ public class NFCSetActivity extends AppCompatActivity {
         if (nfcAlphaRadioGroup != null) {
             nfcAlphaRadioGroup.setOnCheckedChangeListener(null);
             nfcAlphaRadioGroup.clearCheck();
-            setupAlphaListener(nfcAlphaRadioGroup);
+            setupAlphaListener(nfcAlphaRadioGroup,new Bundle());
         }
         RadioGroup nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
         if (nfcPositionRadioGroup != null) {
             nfcPositionRadioGroup.setOnCheckedChangeListener(null);
             nfcPositionRadioGroup.clearCheck();
-            setupPositionListener(nfcPositionRadioGroup);
+            setupPositionListener(nfcPositionRadioGroup,new Bundle());
         }
         NFCDisplay.setChecked(false);
-
-
     }
     private void updateNfcSettingsVisibility(boolean isVisible) {
 
@@ -205,22 +257,17 @@ public class NFCSetActivity extends AppCompatActivity {
         if (nfcPositionRadioGroup != null && nfcPositionSettingRow == null) {
             nfcPositionRadioGroup.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         }
-        LinearLayout nfcResetRow = findViewById(R.id.reset_nfc_row);
-        if (nfcResetRow != null) {
-            nfcResetRow.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        }
-
     }
     private void restoreSettings() {
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch nfcDisplaySwitch = findViewById(R.id.nfc_display_switch);
-        if (nfcDisplaySwitch != null) {
-            nfcDisplaySwitch.setChecked(display);
+//        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch nfcDisplaySwitch = findViewById(R.id.nfc_display_switch);
+        if (displaySwitch != null) {
+            displaySwitch.setChecked(display);
             updateNfcSettingsVisibility(display);
         }
-
-        RadioGroup nfcAlphaRadioGroup = findViewById(R.id.nfc_alpha_radio_group);
-        if (nfcAlphaRadioGroup != null) {
-            int selectedAlpha = alpha;
+        if (display){
+            nfcAlphaRadioGroup = findViewById(R.id.nfc_alpha_radio_group);
+            if (nfcAlphaRadioGroup != null) {
+                int selectedAlpha = alpha;
                 switch (selectedAlpha) {
                     case 0:
                         nfcAlphaRadioGroup.check(R.id.nfc_alpha_close);
@@ -231,11 +278,11 @@ public class NFCSetActivity extends AppCompatActivity {
                     case 2:
                         nfcAlphaRadioGroup.check(R.id.nfc_alpha_70);
                         break;
+                }
             }
-        }
-        RadioGroup nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
-        if (nfcPositionRadioGroup != null) {
-            int selectedPosition = gravity;
+            nfcPositionRadioGroup = findViewById(R.id.nfc_position_radio_group);
+            if (nfcPositionRadioGroup != null) {
+                int selectedPosition = gravity;
                 switch (selectedPosition) {
                     case 0:
                         nfcPositionRadioGroup.check(R.id.nfc_position_a);
@@ -247,6 +294,7 @@ public class NFCSetActivity extends AppCompatActivity {
                         nfcPositionRadioGroup.check(R.id.nfc_position_both);
                         break;
                 }
+            }
         }
     }
 }
