@@ -5,19 +5,20 @@
     <string name="cfd_nfc_settings">Customer display &amp; NFC settings</string>
     <string name="cfd_touch">CFD touch</string>
     <string name="cfd_display">CFD display</string>
+    <string name="cfd_backlight">Brightness</string>
     <string name="allows_touch_input_on_the_cfd">Allows touch input on the CFD.</string>
+
+    <string name="position">Position</string>
     <string name="positiona">PositionA</string>
     <string name="positionb">PositionB</string>
-    <string name="position">Position</string>
     <string name="show_both">Show Both</string>
-    <string name="close">0%</string>
-    <string name="_30">30%</string>
-    <string name="_70">70%</string>
+<!--    <string name="close">0%</string>-->
+<!--    <string name="_30">30%</string>-->
+<!--    <string name="_70">70%</string>-->
     <string name="alpha">Opacity</string>
-    <string name="cfd_backlight">Brightness</string>
     <string name="enable_visual_cue">Visual cue</string>
     <string name="reset_nfc_settings">Reset NFC</string>
-    <string name="nfc_alpha_close">Close</string>
+    <string name="nfc_alpha_close">0%</string>
     <string name="nfc_alpha_30">30%</string>
     <string name="nfc_alpha_70">70%</string>
     <string name="nfc">NFC</string>
@@ -26,21 +27,21 @@
     <string name="battery_warnings">Battery Warnings</string>
     <string name="illegal_battery_warnings">System Has Detected the Uncertified Battery</string>
     <string name="low_battery">Low battery. Please charge.</string>
-    <string name="low_battery_to_shutdown">The battery is about to run out, and the system will shut down in <font color='#FF0000'>%d</font> seconds</string>
+    <string name="low_battery_to_shutdown">The battery is about to run out, and the system will shut down in %d seconds.</string>
 
+    <string name="battery_low_temperature_title" translatable="false">Temperature Warning</string>
+    <string name="battery_low_temperature">Low device temperature. Please check the operating environment.</string>
+    <string name="battery_low_temperature_to_shutdown_title" translatable="false">Low Temperature Protection</string>
+    <string name="battery_low_temperature_to_shutdown" translatable="false">Low temperature. Device will shut down in %d seconds to prevent damage. Please save your data immediately.</string>
 
-
-    <string name="battery_low_temperature">Battery temperature too low. Please check.</string>
-    <string name="battery_low_temperature_to_shutdown" translatable="false">The battery temperature is too low and will shut down in </string>
-    <string name="battery_high_temperature_to_shutdown_title" translatable="false">Overheat Protection</string>
-    <string name="battery_high_temperature_to_shutdown" translatable="false">Critical overheat. The system will shut down in %s seconds to prevent damage.</string>
     <string name="battery_high_temperature_title" translatable="false">Temperature Warning</string>
-    <string name="battery_high_temperature">Device temperature is high. Pause usage, move to a cooler location, or remove the battery if possible.</string>
-    <string name="illegal_battery">Warning: Uncertified battery detected.
-Using non-original batteries may cause overheating, fire, or electric shock. Please replace with manufacturer-certified battery immediately.
-User assumes all risks from continued use of uncertified batteries. </string>
-    <string name="battery_dead" translatable="false">Battery failure,please replace it with a new one.</string>
-    <string name="battery_not_present" translatable="false">Please check the battery.</string>
+    <string name="battery_high_temperature">Device overheating. Stop use, move to a cool area, and remove the battery to cool down if possible.</string>
+    <string name="battery_high_temperature_to_shutdown_title" translatable="false">Overheating Warning</string>
+    <string name="battery_high_temperature_to_shutdown" translatable="false">Overheating. Device will shut down in %d seconds to prevent damage. Please save your data immediately.</string>
+
+    <string name="illegal_battery">Warning: Uncertified battery detected. Using non-original batteries may cause overheating, fire, or electric shock. Please replace with manufacturer-certified battery immediately. User assumes all risks from continued use of uncertified batteries. </string>
+    <string name="battery_dead" translatable="false">Battery failure, please replace it with a new one.</string>
+    <string name="battery_not_present" translatable="false">Battery not detected. Please check and remove the battery\'s protective film before use.</string>
     <string name="ok">OK</string>
 
 </resources>

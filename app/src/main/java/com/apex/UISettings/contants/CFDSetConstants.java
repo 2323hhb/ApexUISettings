@@ -1,9 +1,9 @@
 package com.apex.UISettings.contants;
 
 public class CFDSetConstants {
-    public static class NFCStateRestore {
+    public static class CFDStateRestore {
         public static final String DISPLAY_SWITCH = "display_switch";
-        public static final String TORCH_SWITCH = "touch_switch";
+        public static final String TOUCH_SWITCH = "touch_switch";
         public static final String BRIGHTNESS = "brightness";
 
     }

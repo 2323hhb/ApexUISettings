@@ -7,13 +7,6 @@ import com.opendroid.base.BuildConfig;
 
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * @description Logger 工具类
- * @author ch
- * @date 2023/9/22
- * @edit
- */
 public class Logger {
 
     private final String tag;
@@ -69,9 +62,9 @@ public class Logger {
 
     public static Logger getLogger(String tag) {
         String newTag = tag;
-        if (!BuildConfig.DEBUG) {
-            newTag = "ApexLauncherActivity";
-        }
+//        if (!BuildConfig.DEBUG) {
+//            newTag = "ApexLauncherActivity";
+//        }
         synchronized (LOGGER_INSTANCES) {
             if (LOGGER_INSTANCES.containsKey(newTag)) {
                 return LOGGER_INSTANCES.get(newTag);

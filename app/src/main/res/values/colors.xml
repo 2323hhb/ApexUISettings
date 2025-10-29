@@ -5,6 +5,8 @@
     <color name="switch_normal">#808080</color>
     <color name="track_select">#3B5998</color>
     <color name="thumb_select">#C9D8F0</color>
-
-
+    <color name="dialog_background_color">#00000000</color>
+    <color name="dialog_divider_color">#BFBFC1</color>
+    <color name="dialog_button_color">#1298F1</color>
+    <color name="dialog_code_color">#888888</color>
 </resources>

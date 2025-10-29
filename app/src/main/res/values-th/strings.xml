@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">การตั้งค่า</string>
-    <string name="apex_settings">APEX Settings</string>
+    <string name="cfd_nfc_settings">การตั้งค่าหน้าจอฝั่งลูกค้าและ NFC</string>
     <string name="cfd_settings">การตั้งค่าหน้าจอสำหรับลูกค้า</string>
+    <string name="nfc_settings">การตั้งค่า NFC</string>
     <string name="cfd_touch"> หน้าจอสำหรับลูกค้าหรือไม่</string>
     <string name="cfd_display">การแสดงผลหน้าจอสำหรับลูกค้า</string>
     <string name="allows_touch_input_on_the_cfd">อนุญาตการสัมผัสบนหน้าจอฝั่งลูกค้า</string>
-    <string name="nfc_settings">การตั้งค่า NFC</string>
     <string name="positiona">ตำแหน่ง A</string>
     <string name="positionb">ตำแหน่ง B</string>
     <string name="position">ตำแหน่งการแสดงผล</string>
     <string name="show_both">แสดงทั้งสองตำแหน่ง</string>
-    <string name="close">0%</string>
-    <string name="_30">30%</string>
-    <string name="_70">70%</string>
+<!--    <string name="close">0%</string>-->
+<!--    <string name="_30">30%</string>-->
+<!--    <string name="_70">70%</string>-->
     <string name="alpha">ความโปร่งใส</string>
     <string name="battery_warnings">คำเตือนแบตเตอรี่</string>
     <string name="illegal_battery_warnings">ระบบตรวจพบแบตเตอรี่ที่ไม่ผ่านการรับรอง</string>

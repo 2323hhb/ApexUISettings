@@ -29,9 +29,10 @@
         android:padding="24dp">
 
         <TextView
+            android:id="@+id/settings_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/apex_settings"
+            android:text=""
             android:textSize="32sp"
             android:layout_weight="1" />
     </LinearLayout>
