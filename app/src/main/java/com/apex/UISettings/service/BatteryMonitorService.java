@@ -1,5 +1,9 @@
 package com.apex.UISettings.service;
 
+import static com.apex.UISettings.manager.BatteryWindowManager.DIALOG_TYPE_LOW_BATTERY;
+import static com.apex.UISettings.manager.BatteryWindowManager.currentCountdownTimer;
+import static com.apex.UISettings.manager.BatteryWindowManager.currentDialogType;
+import static com.apex.UISettings.utils.BatteryUtil.isLowBatteryDialogShown;
 import static com.opendroid.devicemanager.ExtDeviceManager.getSupportDeviceList;
 
 import android.app.Service;
@@ -15,6 +19,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import com.apex.UISettings.R;
 import com.apex.UISettings.contants.CFDSetConstants;
+import com.apex.UISettings.manager.BatteryWindowManager;
 import com.apex.UISettings.utils.BatteryUtil;
 import com.apex.UISettings.utils.Logger;
 import com.google.gson.Gson;
@@ -78,7 +83,7 @@ public class BatteryMonitorService extends Service {
             try {
                 unregisterReceiver(mBatteryReceiver);
             } catch (IllegalArgumentException e) {
-//                logger.e("Receiver already unregistered: " + e.getMessage());
+                logger.e("Receiver already unregistered: " + e.getMessage());
             }
         }
     }
@@ -92,9 +97,10 @@ public class BatteryMonitorService extends Service {
         mBatteryReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("BatteryMonitorService", String.valueOf(intent));
                 if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
                     BatteryUtil.BatteryStatusInfo statusInfo = BatteryUtil.checkBatteryStatus(context, intent);
+                    Boolean isCharging = BatteryUtil.isCharging(intent);
+                    logger.i("statusInfo: " + statusInfo);
                     if (statusInfo != null) {
                         Log.d("BatteryMonitorService", statusInfo.toString());
                         logger.i("Battery status changed - Title: " + statusInfo.title);
@@ -103,11 +109,10 @@ public class BatteryMonitorService extends Service {
                         broadcastIntent.putExtra("iconId", statusInfo.iconId);
                         broadcastIntent.putExtra("title", statusInfo.title);
                         broadcastIntent.putExtra("message", statusInfo.message);
-                        Log.d("BatteryMonitorService", "message:" + statusInfo.message);
                         broadcastIntent.putExtra("isLowBattery",
                                 Objects.equals(statusInfo.title, getString(R.string.low_battery)));
+                        broadcastIntent.putExtra("invalidBatteryState",statusInfo.invalidBatteryState);
                         broadcastIntent.putExtra("batteryCode", statusInfo.batteryCode);
-                        logger.i("About to send broadcast with permission using sendBroadcastAsUser");
                         try {
                             sendBroadcastAsUser(
                                     broadcastIntent,
@@ -118,6 +123,16 @@ public class BatteryMonitorService extends Service {
                         } catch (Exception e) {
                             logger.e("registerBatteryReceiver Failed to send broadcast: " + e.getMessage());
                         }
+                    }
+                    logger.i("isLowBatteryDialogShown: "+ isLowBatteryDialogShown);
+                    logger.i("isCharging: "+ isCharging);
+                    logger.i("currentDialogType: "+ currentDialogType);
+                    if (isLowBatteryDialogShown && isCharging){
+                        if (currentCountdownTimer != null) {
+                            currentCountdownTimer.cancel();
+                        }
+                        BatteryWindowManager.dismissDialog();
+                        isLowBatteryDialogShown = false;
                     }
                 }
             }

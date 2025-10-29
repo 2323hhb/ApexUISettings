@@ -95,15 +95,15 @@ public class BatteryUtil {
         int invalidMsg = getInvalidBatteryMsg(health);
         Log.d("ApexBatteryUtil","invalidMsg: " + invalidMsg);
         if (invalidMsg != 0 && !isInvalidBatteryDialogShown) {
-
                 statusInfo.invalidBatteryState= invalidMsg;
                 statusInfo.batteryCode = batteryCode;
                 if (invalidMsg == BatteryConstants.InvalidBatteryState.UNKNOWN){
-                    statusInfo.title = context.getString(R.string.illegal_battery_warnings);
                     if (isPresent){
+                        statusInfo.title = context.getString(R.string.illegal_battery_warnings);
                         statusInfo.message = context.getString(R.string.illegal_battery);
                         statusInfo.iconId = R.drawable.battery_abnormality_warning;
                     }else {
+                        statusInfo.title = context.getString(R.string.battery_warnings);
                         statusInfo.message = context.getString(R.string.battery_not_present);
                         statusInfo.iconId = R.drawable.battery_abnormality_warning;
                     }

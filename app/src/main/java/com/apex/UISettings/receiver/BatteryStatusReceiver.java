@@ -19,9 +19,9 @@ public class BatteryStatusReceiver extends BroadcastReceiver {
             String title = intent.getStringExtra("title");
             String message = intent.getStringExtra("message");
 //            boolean isLowBattery = intent.getBooleanExtra("isLowBattery", false);
-            int InvalidBatteryState = intent.getIntExtra("InvalidBatteryState", 0);
+            int invalidBatteryState = intent.getIntExtra("invalidBatteryState", 0);
             String batteryCode = intent.getStringExtra("batteryCode");
-            BatteryWindowManager.showBatteryDialog(context, iconId, title, message,InvalidBatteryState,batteryCode);
+            BatteryWindowManager.showBatteryDialog(context, iconId, title, message,invalidBatteryState,batteryCode);
         }
     }
 }
